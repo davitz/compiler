@@ -29,8 +29,8 @@ pub enum Token<'a> {
     Empty
 }
 
-//identifies and returns the next token along with the number of characters that went into it
-fn next_token(code: &str) -> (Vec<Token>,usize) {
+//identifies and returns the next chunk of tokens along with the number of characters that went into them
+fn next_tokens(code: &str) -> (Vec<Token>,usize) {
 
     lazy_static!{
 	static ref IF: Regex = Regex::new(r"^if([^[:alnum:]]|$)").unwrap();
@@ -107,7 +107,7 @@ pub fn lex(code: &str) -> Vec<Token> {
 	let mut index = 0usize;
 	let length = line.chars().count();
 	while index < length {
-	    let (new_tokens, len) = next_token(line.substring(index, length));
+	    let (new_tokens, len) = next_tokens(line.substring(index, length));
 	    result.extend(new_tokens);
 	    index += len;
 	}
